@@ -1,0 +1,4 @@
+main.py
+app/__pycache__
+app/network/__pycache__
+app/network/dataset

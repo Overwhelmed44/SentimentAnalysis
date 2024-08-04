@@ -1,5 +1,5 @@
 from .preprocessing import texts_to_sequences, filter_text
-from app.utils import tskv_reader, json_write
+from app.utils import tskv_reader, json_write, merge_iterators
 from keras.api.utils import to_categorical
 from . import tokenizer, model
 from itertools import islice
@@ -8,8 +8,11 @@ from itertools import islice
 def train(n=10_000):
     iter_ = tskv_reader(r'app/network/dataset/dataset.tskv')
 
-    revs = [[''] * n, [0] * n]
-    for it, rev in enumerate(islice(iter_, n)):
+    pos = islice(filter(lambda r: int(r['rating'][0]) > 3, iter_), n)
+    neg = islice(filter(lambda r: int(r['rating'][0]) <= 3, iter_), n)
+
+    revs = [[''] * 2 * n, [0] * 2 * n]
+    for it, rev in enumerate(merge_iterators((pos, neg))):
         revs[0][it] = filter_text(rev['text'])
 
         rating = int(rev['rating'][0])

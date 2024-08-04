@@ -10,4 +10,3 @@ model = Sequential([
 ])
 
 model.compile('adam', 'categorical_crossentropy', metrics=['accuracy'])
-model.summary()

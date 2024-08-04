@@ -24,7 +24,7 @@ from app.eval import evaluate_text
 
 def main():
     while True:
-        print(evaluate_text(input()), end='\n\n')
+        print(evaluate_text(input('>>> ')), end='\n\n')
 
 if __name__ == '__main__':
     main()
